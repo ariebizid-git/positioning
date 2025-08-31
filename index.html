@@ -261,7 +261,7 @@
 
     <footer class="bg-slate-800 text-slate-300 mt-20 md:mt-32">
         <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 Aplikasi Interaktif Konsep Positioning. Dibuat untuk tujuan edukasi.</p>
+            <p>&copy; 2025 SlingshotLabs Konsep Positioning. Dibuat untuk tujuan edukasi.</p>
         </div>
     </footer>
 
@@ -307,7 +307,7 @@
             positioningLoading.classList.remove('hidden');
             positioningStatement.innerText = "";
             positioningBtn.disabled = true;
-            const systemPrompt = "Bertindaklah sebagai ahli pemasaran profesional. Buatlah satu pernyataan positioning yang ringkas, persuasif, dan unik untuk produk yang dideskripsikan oleh pengguna.";
+            const systemPrompt = "Bertindaklah sebagai ahli pemasaran profesional sekelas Philip Kotler. Buatlah satu pernyataan positioning yang ringkas, persuasif, dan unik untuk produk yang dideskripsikan oleh pengguna.";
             const userQuery = userPrompt;
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const payload = {
@@ -369,7 +369,7 @@
             segmentLoading.classList.remove('hidden');
             segmentResult.innerText = "";
             segmentBtn.disabled = true;
-            const systemPrompt = "Bertindaklah sebagai ahli pemasaran. Untuk produk yang dideskripsikan, identifikasi dan jelaskan 3-4 segmen pasar potensial berdasarkan demografi, psikografi, dan perilaku. Berikan jawaban dalam format poin-poin.";
+            const systemPrompt = "Bertindaklah sebagai ahli pemasaran sekelas Philip Kotler. Untuk produk yang dideskripsikan, identifikasi dan jelaskan 3-4 segmen pasar potensial berdasarkan demografi, psikografi, dan perilaku. Berikan jawaban dalam format poin-poin.";
             const userQuery = userPrompt;
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const payload = {
