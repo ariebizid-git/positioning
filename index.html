@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Positioning: Pertarungan di Benak Pelanggan</title>
+    <title>Positioning adalah Pertarungan di Benak Pelanggan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -145,8 +145,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-           
-            const apiKey = "AIzaSyD_LR1MUciYIRqbX_kr90cTzVgWE5lf2YY"; 
+            // ===================================================================
+            // GANTI DENGAN API KEY ANDA
+            // ===================================================================
+            const apiKey = "AIzaSyD_LR1MUciYIRqbX_kr90cTzVgWE5lf2YY"; // <-- GANTI DI SINI
             // ===================================================================
 
             // === FUNGSI UTAMA UNTUK MEMANGGIL API (REUSABLE) ===
@@ -156,7 +158,7 @@
                     output.innerHTML = `<p>${initialText}</p>`;
                     return;
                 }
-                if (apiKey === "AIzaSyD_LR1MUciYIRqbX_kr90cTzVgWE5lf2YY") {
+                if (apiKey === "GANTI_DENGAN_API_KEY_ANDA") {
                     output.innerHTML = `<p class="text-red-600">API Key belum diatur. Silakan edit file dan masukkan kunci Anda.</p>`;
                     return;
                 }
