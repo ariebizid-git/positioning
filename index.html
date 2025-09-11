@@ -8,58 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals (Background: #FDFDFB, Text: #1E293B, Accent: #3B82F6) -->
-    <!-- Application Structure Plan: Saya merancang aplikasi ini sebagai pengalaman vertikal yang mengalir, dibagi menjadi tiga bagian tematik: "Definisi," "Strategi Kunci," dan "Mengapa Penting," serta dua fitur baru yang didukung AI: "Analisis Segmen Pasar" dan "Ide Slogan". Struktur ini dipilih untuk memandu pengguna secara logis dari konsep dasar ke aplikasi praktis, meniru alur belajar yang efektif. Interaksi utama melibatkan "tes pikiran" untuk personalisasi konsep, kartu strategi yang dapat diklik untuk penemuan mandiri, diagram tangga interaktif untuk visualisasi, dan alat bantu penulisan berbasis AI untuk praktik langsung. Alur ini mengubah presentasi statis menjadi perjalanan eksplorasi, meningkatkan keterlibatan dan retensi pemahaman. -->
-    <!-- Visualization & Content Choices: 
-        1. Definisi (Slide 1) -> Goal: Membuat konsep abstrak menjadi nyata -> Viz/Presentation: Teks pengantar dengan input interaktif. -> Interaction: Pengguna mengetik asosiasi merek mereka, dan JavaScript memberikan contoh umum. -> Justification: Mendemonstrasikan secara langsung bagaimana positioning bekerja pada pikiran pengguna, menjadikannya personal dan mudah diingat.
-        2. Strategi (Slide 2) -> Goal: Menjelaskan tiga metode inti secara jelas -> Viz/Presentation: Tiga kartu interaktif yang disajikan dalam tata letak grid. -> Interaction: Mengklik kartu akan menampilkan detail konsep, alasan efektivitas, dan contoh nyata. -> Justification: Memecah informasi kompleks menjadi bagian-bagian yang dapat dicerna, memungkinkan pengguna untuk belajar sesuai kecepatan mereka sendiri.
-        3. Mengapa Penting (Slide 3) -> Goal: Memperkuat nilai konsep -> Viz/Presentation: Diagram "Tangga Produk" yang dibangun dengan HTML/CSS. -> Interaction: Mengarahkan kursor ke anak tangga akan mengungkapkan contoh merek pada posisi tersebut. -> Justification: Visualisasi metafora "tangga" membantu memperkuat konsep hierarki merek di benak konsumen. Interaksi hover sederhana menambahkan lapisan penemuan tanpa kerumitan.
-        4. Analisis Segmen Pasar (Gemini API) -> Goal: Menerapkan konsep segmentasi secara praktis -> Viz/Presentation: Area teks dan tombol untuk menghasilkan konten -> Interaction: Pengguna memasukkan deskripsi produk, menekan tombol, dan Gemini API menghasilkan analisis segmen pasar yang potensial. -> Justification: Memungkinkan pengguna untuk secara langsung mempraktikkan konsep Marketing 2.0.
-        5. Ide Slogan (Gemini API) -> Goal: Mengubah positioning menjadi slogan kreatif -> Viz/Presentation: Area teks untuk input dan tombol untuk menghasilkan konten -> Interaction: Pengguna memasukkan deskripsi produk dan pernyataan positioning, dan Gemini API menghasilkan beberapa ide slogan. -> Justification: Menghubungkan teori positioning dengan output praktis yang dapat digunakan oleh pengguna.
-        Library/Method: Semua interaksi diimplementasikan dengan Vanilla JavaScript. Gemini API digunakan untuk fitur AI. Tidak ada library chart yang digunakan karena kontennya bersifat kualitatif. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFDFB;
-            color: #1E293B;
-        }
-        .active-tab {
-            background-color: #3B82F6 !important;
-            color: #FFFFFF !important;
-            border-color: #3B82F6 !important;
-        }
-        .strategy-card {
-            transition: all 0.3s ease-in-out;
-            border: 2px solid transparent;
-        }
-        .strategy-card.active {
-            border-color: #3B82F6;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        .strategy-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .strategy-content.active {
-            display: block;
-            opacity: 1;
-        }
-        .ladder-rung {
-            transition: background-color 0.2s ease;
-        }
-        .ladder-rung:hover .rung-text {
-            opacity: 1;
-        }
-        .rung-text {
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #FDFDFB; color: #1E293B; }
+        .strategy-card { transition: all 0.3s ease-in-out; border: 2px solid transparent; }
+        .strategy-card.active { border-color: #3B82F6; transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        .strategy-content { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .strategy-content.active { display: block; opacity: 1; }
+        .ladder-rung:hover .rung-text { opacity: 1; }
+        .rung-text { opacity: 0; transition: opacity 0.2s ease; }
     </style>
 </head>
 <body class="antialiased">
@@ -67,19 +24,16 @@
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold text-slate-800">Positioning <span class="text-blue-600">oleh Arie Lin, MM</span></h1>
-            <div class="hidden md:flex space-x-8">
+            <div class="hidden md:flex space-x-6">
                 <a href="#definition" class="text-slate-600 hover:text-blue-600 transition">Definisi</a>
                 <a href="#strategies" class="text-slate-600 hover:text-blue-600 transition">Strategi Kunci</a>
                 <a href="#importance" class="text-slate-600 hover:text-blue-600 transition">Mengapa Penting</a>
-                <a href="#segment-feature" class="text-blue-600 hover:text-blue-500 transition font-semibold">Segmen Pasar</a>
-                <a href="#slogan-feature" class="text-blue-600 hover:text-blue-500 transition font-semibold">Ide Slogan</a>
-                <a href="#positioning-feature" class="text-blue-600 hover:text-blue-500 transition font-semibold">Positioning Anda</a>
+                <a href="#ai-features" class="text-blue-600 hover:text-blue-500 transition font-semibold">Fitur AI ✨</a>
             </div>
         </nav>
     </header>
 
     <main class="container mx-auto px-6 py-12 md:py-20">
-
         <section id="definition" class="text-center mb-20 md:mb-32">
             <h2 class="text-3xl md:text-5xl font-bold mb-4">Pertarungan di Benak Pelanggan</h2>
             <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 mb-8">
@@ -90,12 +44,12 @@
                 <p class="text-slate-600 mb-6">Pikirkan merek yang pertama kali terlintas di benak Anda untuk kategori di bawah ini. Ini adalah bukti positioning yang berhasil.</p>
                 <div class="space-y-4 text-left">
                     <div>
-                        <label for="courier" class="font-semibold text-slate-700">Air Mineral:</label>
-                        <input type="text" id="courier" placeholder="Ketik merek di sini..." class="w-full mt-2 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        <label for="mineral-water" class="font-semibold text-slate-700">Air Mineral:</label>
+                        <input type="text" id="mineral-water" placeholder="Ketik merek di sini..." class="w-full mt-2 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                     </div>
                     <div>
-                        <label for="car" class="font-semibold text-slate-700">Mobil keluarga yang bagus:</label>
-                        <input type="text" id="car" placeholder="Ketik merek di sini..." class="w-full mt-2 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        <label for="family-car" class="font-semibold text-slate-700">Mobil keluarga yang bagus:</label>
+                        <input type="text" id="family-car" placeholder="Ketik merek di sini..." class="w-full mt-2 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                     </div>
                 </div>
             </div>
@@ -108,25 +62,25 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div id="strat-1" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer border-2 border-blue-600" onclick="showStrategy('content-1', 'strat-1')">
+                <div id="strat-1" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer" data-content="content-1">
                     <div class="text-3xl mb-4">🥇</div>
                     <h3 class="text-xl font-bold mb-2">Menjadi yang Pertama</h3>
                     <p class="text-slate-600">Posisi terbaik adalah menjadi yang pertama dalam sebuah kategori di benak pelanggan.</p>
                 </div>
-                <div id="strat-2" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer" onclick="showStrategy('content-2', 'strat-2')">
+                <div id="strat-2" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer" data-content="content-2">
                     <div class="text-3xl mb-4">🥊</div>
                     <h3 class="text-xl font-bold mb-2">Melawan Pemimpin Pasar</h3>
                     <p class="text-slate-600">Posisikan diri Anda sebagai alternatif yang jelas terhadap pemimpin pasar.</p>
                 </div>
-                <div id="strat-3" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer" onclick="showStrategy('content-3', 'strat-3')">
+                <div id="strat-3" class="strategy-card bg-white p-6 rounded-lg shadow-sm cursor-pointer" data-content="content-3">
                     <div class="text-3xl mb-4">🚀</div>
                     <h3 class="text-xl font-bold mb-2">Menciptakan Kategori Baru</h3>
                     <p class="text-slate-600">Ciptakan sebuah kategori baru di mana Anda bisa menjadi yang pertama.</p>
                 </div>
             </div>
 
-            <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200 min-h-[300px]">
-                <div id="content-1" class="strategy-content active">
+            <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200 min-h-[300px] relative">
+                <div id="content-1" class="strategy-content">
                     <h4 class="text-2xl font-bold mb-4 text-blue-600">Strategi 1: Menjadi yang Pertama</h4>
                     <p class="text-lg font-semibold mb-3">Mengapa Efektif?</p>
                     <p class="text-slate-700 mb-6">Manusia secara alami mengingat yang pertama. Posisi ini adalah yang paling sulit untuk ditantang oleh kompetitor karena sudah tertanam kuat di dalam memori kolektif pasar.</p>
@@ -151,7 +105,7 @@
         </section>
 
         <section id="importance" class="mb-20 md:mb-32">
-             <div class="text-center mb-12">
+            <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold mb-3">Mengapa Positioning Sangat Penting?</h2>
                 <p class="max-w-3xl mx-auto text-lg text-slate-600">Di tengah lautan informasi, positioning adalah jangkar Anda. <strong class="text-slate-800">"The mind is the only battlefield,"</strong> kata Al Ries.</p>
             </div>
@@ -166,7 +120,7 @@
                         <h3 class="text-xl font-bold mb-2">2. Bekerja dengan Pikiran yang Selektif</h3>
                         <p class="text-slate-600">Otak akan menolak informasi yang tidak sesuai dengan apa yang sudah ada di benaknya. Positioning membantu Anda masuk ke dalam benak dengan cara yang terstruktur dan mudah diterima.</p>
                     </div>
-                     <div>
+                    <div>
                         <h3 class="text-xl font-bold mb-2">3. Memenangkan "Tangga Produk"</h3>
                         <p class="text-slate-600">Pemenang bukanlah produk terbaik, tapi merek yang berhasil berada di posisi teratas dalam benak pelanggan. Jelajahi tangga produk di sebelah kanan.</p>
                     </div>
@@ -193,65 +147,46 @@
             </div>
         </section>
 
-        <section id="segment-feature" class="mb-20 md:mb-32">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-3">Analisis Segmen Pasar ✨</h2>
-                <p class="max-w-2xl mx-auto text-lg text-slate-600">Gunakan AI untuk mengidentifikasi segmen pasar potensial untuk produk atau layanan Anda.</p>
+        <section id="ai-features">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">Coba Fitur AI ✨</h2>
+                <p class="max-w-2xl mx-auto text-lg text-slate-600">Gunakan AI untuk membantu merumuskan strategi positioning Anda secara praktis.</p>
             </div>
-            <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200 max-w-3xl mx-auto">
-                <div class="space-y-4">
-                    <label for="segment-desc" class="font-semibold text-slate-700">Deskripsikan produk atau layanan Anda:</label>
-                    <textarea id="segment-desc" rows="3" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Sebuah platform online untuk kursus coding interaktif bagi pemula."></textarea>
-                    <button id="segment-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-                        Analisis Segmen ✨
-                    </button>
-                    <div id="segment-loading" class="text-center text-slate-500 mt-4 hidden">Menganalisis segmen...</div>
-                    <div id="segment-result-box" class="mt-6 p-6 bg-slate-100 rounded-md border border-slate-200">
-                        <h4 class="font-bold text-lg mb-2 text-slate-800">Segmen Pasar yang Disarankan:</h4>
-                        <div id="segment-result" class="text-slate-700 italic"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-3">Analisis Segmen Pasar</h3>
+                    <p class="text-slate-600 mb-6">Identifikasi segmen pasar potensial untuk produk Anda.</p>
+                    <div class="space-y-4">
+                        <textarea id="segment-desc" rows="4" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Platform kursus coding interaktif untuk pemula."></textarea>
+                        <button id="segment-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Analisis Segmen</button>
+                        <div id="segment-loading" class="text-center text-slate-500 mt-4 hidden">Menganalisis...</div>
+                        <div class="mt-4 p-4 bg-slate-50 rounded-md border border-slate-200 min-h-[100px]">
+                            <p id="segment-result" class="text-slate-700 text-sm whitespace-pre-wrap">Hasil akan muncul di sini...</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="slogan-feature" class="mb-20 md:mb-32">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-3">Ide Slogan ✨</h2>
-                <p class="max-w-2xl mx-auto text-lg text-slate-600">Ubah ide positioning Anda menjadi slogan yang menarik dan berkesan.</p>
-            </div>
-            <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200 max-w-3xl mx-auto">
-                <div class="space-y-4">
-                    <label for="slogan-desc" class="font-semibold text-slate-700">Deskripsikan produk dan positioning Anda:</label>
-                    <textarea id="slogan-desc" rows="4" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Kami adalah jasa pengantaran makanan tercepat untuk milenial yang sibuk di perkotaan."></textarea>
-                    <button id="slogan-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-                        Buat Slogan ✨
-                    </button>
-                    <div id="slogan-loading" class="text-center text-slate-500 mt-4 hidden">Membuat slogan...</div>
-                    <div id="slogan-result-box" class="mt-6 p-6 bg-slate-100 rounded-md border border-slate-200">
-                        <h4 class="font-bold text-lg mb-2 text-slate-800">Ide Slogan yang Disarankan:</h4>
-                        <div id="slogan-result" class="text-slate-700 italic"></div>
+                <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-3">Generator Slogan</h3>
+                    <p class="text-slate-600 mb-6">Ubah positioning Anda menjadi slogan yang menarik.</p>
+                    <div class="space-y-4">
+                        <textarea id="slogan-desc" rows="4" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Jasa antar makanan tercepat untuk milenial sibuk di perkotaan."></textarea>
+                        <button id="slogan-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Buat Slogan</button>
+                        <div id="slogan-loading" class="text-center text-slate-500 mt-4 hidden">Membuat...</div>
+                        <div class="mt-4 p-4 bg-slate-50 rounded-md border border-slate-200 min-h-[100px]">
+                            <p id="slogan-result" class="text-slate-700 text-sm whitespace-pre-wrap">Hasil akan muncul di sini...</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="positioning-feature">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-3">Positioning Anda ✨</h2>
-                <p class="max-w-2xl mx-auto text-lg text-slate-600">Gunakan AI untuk membantu Anda merumuskan pernyataan positioning. Jelaskan produk atau layanan Anda, dan biarkan Gemini membantu Anda.</p>
-            </div>
-            
-            <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200 max-w-3xl mx-auto">
-                <div class="space-y-4">
-                    <label for="product-desc" class="font-semibold text-slate-700">Deskripsikan produk atau layanan Anda:</label>
-                    <textarea id="product-desc" rows="4" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Aplikasi mobile untuk membantu orang tua menemukan taman bermain yang aman dan bersih di dekat mereka."></textarea>
-                    <button id="positioning-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
-                        Buat Pernyataan Positioning ✨
-                    </button>
-                    <div id="positioning-loading" class="text-center text-slate-500 mt-4 hidden">Membuat pernyataan...</div>
-                    <div id="positioning-result-box" class="mt-6 p-6 bg-slate-100 rounded-md border border-slate-200">
-                        <h4 class="font-bold text-lg mb-2 text-slate-800">Pernyataan Positioning yang Disarankan:</h4>
-                        <div id="positioning-statement" class="text-slate-700 italic"></div>
+                <div class="bg-white p-8 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-3">Pernyataan Positioning</h3>
+                    <p class="text-slate-600 mb-6">Rumuskan pernyataan positioning yang kuat dan jelas.</p>
+                    <div class="space-y-4">
+                        <textarea id="positioning-desc" rows="4" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Aplikasi mobile untuk membantu orang tua menemukan taman bermain yang aman."></textarea>
+                        <button id="positioning-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Buat Pernyataan</button>
+                        <div id="positioning-loading" class="text-center text-slate-500 mt-4 hidden">Membuat...</div>
+                        <div class="mt-4 p-4 bg-slate-50 rounded-md border border-slate-200 min-h-[100px]">
+                            <p id="positioning-result" class="text-slate-700 text-sm whitespace-pre-wrap">Hasil akan muncul di sini...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,214 +201,101 @@
     </footer>
 
     <script>
-        const strategyContents = document.querySelectorAll('.strategy-content');
-        const strategyCards = document.querySelectorAll('.strategy-card');
+        document.addEventListener('DOMContentLoaded', () => {
 
-        function showStrategy(contentId, cardId) {
-            strategyContents.forEach(content => {
-                content.classList.remove('active');
-            });
+            const apiKey = "AIzaSyD_LR1MUciYIRqbX_kr90cTzVgWE5lf2YY";
+            // ===================================================================
+
+            // === Logika untuk Tab Strategi ===
+            const strategyCards = document.querySelectorAll('.strategy-card');
+            const strategyContents = document.querySelectorAll('.strategy-content');
+
+            function showStrategy(contentId, cardId) {
+                strategyContents.forEach(content => content.classList.remove('active'));
+                strategyCards.forEach(card => card.classList.remove('active'));
+                
+                document.getElementById(contentId)?.classList.add('active');
+                document.getElementById(cardId)?.classList.add('active');
+            }
 
             strategyCards.forEach(card => {
-                card.classList.remove('active');
-                 card.style.borderColor = 'transparent';
+                card.addEventListener('click', () => {
+                    showStrategy(card.dataset.content, card.id);
+                });
             });
+
+            showStrategy('content-1', 'strat-1');
+
+            // === FUNGSI UTAMA UNTUK MEMANGGIL API (REUSABLE) ===
+            async function handleApiCall({ button, input, output, loading, systemPrompt, initialText }) {
+                const userPrompt = input.value.trim();
+                if (!userPrompt) {
+                    output.innerText = initialText;
+                    return;
+                }
+                if (!apiKey || apiKey === "MASUKKAN_API_KEY_ANDA_YANG_SUDAH_DIBATASI") {
+                    output.innerText = "API Key belum diatur. Silakan edit file HTML dan masukkan kunci Anda.";
+                    return;
+                }
+
+                loading.classList.remove('hidden');
+                output.innerText = "";
+                button.disabled = true;
+
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(`API Error: ${errorData.error.message}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        output.innerText = text.trim();
+                    } else {
+                        throw new Error("Format respons API tidak valid.");
+                    }
+                } catch (error) {
+                    output.innerText = `Terjadi kesalahan: ${error.message}`;
+                    console.error('Gagal mengambil data:', error);
+                } finally {
+                    loading.classList.add('hidden');
+                    button.disabled = false;
+                }
+            }
             
-            const cardElement = document.getElementById(cardId);
+            // === Konfigurasi untuk setiap Fitur AI ===
+            const aiFeatures = [
+                { id: 'segment', systemPrompt: "Anda adalah ahli pemasaran. Identifikasi 3 segmen pasar potensial (demografi, psikografi, perilaku) untuk produk ini. Berikan dalam format poin-poin.", initialText: "Mohon deskripsikan produk Anda." },
+                { id: 'slogan', systemPrompt: "Anda adalah copywriter kreatif. Buat 5 ide slogan yang menarik dan unik untuk produk dan positioning ini.", initialText: "Mohon deskripsikan produk dan positioning Anda." },
+                { id: 'positioning', systemPrompt: "Anda adalah ahli strategi merek. Buat satu pernyataan positioning yang ringkas dan kuat (Untuk [target pasar], [nama merek] adalah [kategori] yang [poin pembeda]) untuk produk ini.", initialText: "Mohon deskripsikan produk Anda." }
+            ];
 
-            document.getElementById(contentId).classList.add('active');
-            cardElement.classList.add('active');
-            cardElement.style.borderColor = '#3B82F6';
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-           showStrategy('content-1', 'strat-1');
-        });
-
-        const apiKey = "AIzaSyD_LR1MUciYIRqbX_kr90cTzVgWE5lf2YY";
-
-        // ----- Positioning Feature -----
-        const positioningBtn = document.getElementById('positioning-btn');
-        const productDesc = document.getElementById('product-desc');
-        const positioningStatement = document.getElementById('positioning-statement');
-        const positioningLoading = document.getElementById('positioning-loading');
-
-        positioningBtn.addEventListener('click', async () => {
-            const userPrompt = productDesc.value.trim();
-            if (!userPrompt) {
-                positioningStatement.innerText = "Mohon deskripsikan produk Anda terlebih dahulu.";
-                return;
-            }
-            positioningLoading.classList.remove('hidden');
-            positioningStatement.innerText = "";
-            positioningBtn.disabled = true;
-            const systemPrompt = "Bertindaklah sebagai ahli pemasaran profesional sekelas Philip Kotler. Buatlah satu pernyataan positioning yang ringkas, persuasif, dan unik untuk produk yang dideskripsikan oleh pengguna.";
-            const userQuery = userPrompt;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-            let attempts = 0;
-            const maxAttempts = 3;
-            const backoff = 1000;
-            const fetchData = async () => {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        if (response.status === 429 && attempts < maxAttempts) {
-                            await new Promise(res => setTimeout(res, backoff * (2 ** attempts)));
-                            attempts++;
-                            return fetchData();
-                        } else {
-                            throw new Error(`API error: ${response.statusText}`);
-                        }
-                    }
-                    const result = await response.json();
-                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (text) {
-                        positioningStatement.innerText = text.trim();
-                    } else {
-                        throw new Error("Invalid API response format.");
-                    }
-                } catch (error) {
-                    positioningStatement.innerText = `Terjadi kesalahan: ${error.message}`;
-                    console.error('Error fetching data:', error);
-                } finally {
-                    positioningLoading.classList.add('hidden');
-                    positioningBtn.disabled = false;
-                }
-            };
-            fetchData();
-        });
-
-        // ----- Segment Feature -----
-        const segmentBtn = document.getElementById('segment-btn');
-        const segmentDesc = document.getElementById('segment-desc');
-        const segmentResult = document.getElementById('segment-result');
-        const segmentLoading = document.getElementById('segment-loading');
-
-        segmentBtn.addEventListener('click', async () => {
-            const userPrompt = segmentDesc.value.trim();
-            if (!userPrompt) {
-                segmentResult.innerText = "Mohon deskripsikan produk Anda terlebih dahulu.";
-                return;
-            }
-            segmentLoading.classList.remove('hidden');
-            segmentResult.innerText = "";
-            segmentBtn.disabled = true;
-            const systemPrompt = "Bertindaklah sebagai ahli pemasaran sekelas Philip Kotler. Untuk produk yang dideskripsikan, identifikasi dan jelaskan 3-4 segmen pasar potensial berdasarkan demografi, psikografi, dan perilaku. Berikan jawaban dalam format poin-poin.";
-            const userQuery = userPrompt;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-            let attempts = 0;
-            const maxAttempts = 3;
-            const backoff = 1000;
-            const fetchData = async () => {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        if (response.status === 429 && attempts < maxAttempts) {
-                            await new Promise(res => setTimeout(res, backoff * (2 ** attempts)));
-                            attempts++;
-                            return fetchData();
-                        } else {
-                            throw new Error(`API error: ${response.statusText}`);
-                        }
-                    }
-                    const result = await response.json();
-                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (text) {
-                        segmentResult.innerText = text.trim();
-                    } else {
-                        throw new Error("Invalid API response format.");
-                    }
-                } catch (error) {
-                    segmentResult.innerText = `Terjadi kesalahan: ${error.message}`;
-                    console.error('Error fetching data:', error);
-                } finally {
-                    segmentLoading.classList.add('hidden');
-                    segmentBtn.disabled = false;
-                }
-            };
-            fetchData();
-        });
-
-        // ----- Slogan Feature -----
-        const sloganBtn = document.getElementById('slogan-btn');
-        const sloganDesc = document.getElementById('slogan-desc');
-        const sloganResult = document.getElementById('slogan-result');
-        const sloganLoading = document.getElementById('slogan-loading');
-
-        sloganBtn.addEventListener('click', async () => {
-            const userPrompt = sloganDesc.value.trim();
-            if (!userPrompt) {
-                sloganResult.innerText = "Mohon deskripsikan produk dan positioning Anda terlebih dahulu.";
-                return;
-            }
-            sloganLoading.classList.remove('hidden');
-            sloganResult.innerText = "";
-            sloganBtn.disabled = true;
-            const systemPrompt = "Bertindaklah sebagai seorang copywriter kreatif. Berikan 5 ide slogan yang persuasif dan unik untuk produk yang dideskripsikan oleh pengguna.";
-            const userQuery = userPrompt;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-            let attempts = 0;
-            const maxAttempts = 3;
-            const backoff = 1000;
-            const fetchData = async () => {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        if (response.status === 429 && attempts < maxAttempts) {
-                            await new Promise(res => setTimeout(res, backoff * (2 ** attempts)));
-                            attempts++;
-                            return fetchData();
-                        } else {
-                            throw new Error(`API error: ${response.statusText}`);
-                        }
-                    }
-                    const result = await response.json();
-                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (text) {
-                        sloganResult.innerText = text.trim();
-                    } else {
-                        throw new Error("Invalid API response format.");
-                    }
-                } catch (error) {
-                    sloganResult.innerText = `Terjadi kesalahan: ${error.message}`;
-                    console.error('Error fetching data:', error);
-                } finally {
-                    sloganLoading.classList.add('hidden');
-                    sloganBtn.disabled = false;
-                }
-            };
-            fetchData();
+            // Setup event listener untuk semua fitur AI
+            aiFeatures.forEach(feature => {
+                const config = {
+                    button: document.getElementById(`${feature.id}-btn`),
+                    input: document.getElementById(`${feature.id}-desc`),
+                    output: document.getElementById(`${feature.id}-result`),
+                    loading: document.getElementById(`${feature.id}-loading`),
+                    systemPrompt: feature.systemPrompt,
+                    initialText: feature.initialText
+                };
+                config.button.addEventListener('click', () => handleApiCall(config));
+            });
         });
     </script>
 </body>
